@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .content{
+            height: 200px;
+            background: red;
+            /* overflow: hidden; */
+            /* overflow-y: scroll; */
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="content">
+        <ul>
+            <button id="btn">clilk</button>
+            <li>lorem1</li>
+            <li>lorem2</li>
+            <li>lorem3</li>
+            <li>lorem4</li>
+            <li>lorem5</li>
+            <li>lorem6</li>
+            <li>lorem7</li>
+            <li>lorem8</li>
+            <li>lorem9</li>
+            <li>lorem10</li>
+            <li>lorem11</li>
+            <li>lorem12</li>
+            <li>lorem13</li>
+            <li>lorem14</li>
+            <li>lorem15</li>
+            <li>lorem16</li>
+            <li>lorem17</li>
+            <li>lorem18</li>
+            <li>lorem19</li>
+            <li>lorem20</li>
+            <li>lorem21</li>
+            <li>lorem22</li>
+            <li>lorem23</li>
+            <li>lorem24</li>
+            <li>lorem25</li>
+            <li>lorem26</li>
+            <li>lorem27</li>
+            <li>lorem28</li>
+            <li>lorem29</li>
+            <li>lorem30</li>
+            <li>lorem31</li>
+            <li>lorem32</li>
+            <li>lorem33</li>
+            <li>lorem34</li>
+            <li>lorem35</li>
+            <li>lorem36</li>
+            <li>lorem37</li>
+            <li>lorem38</li>
+            <li>lorem39</li>
+            <li>lorem40</li>
+            <li>lorem41</li>
+            <li>lorem42</li>
+            <li>lorem43</li>
+            <li>lorem44</li>
+            <li>lorem45</li>
+            <li>lorem46</li>
+            <li>lorem47</li>
+            <li>lorem48</li>
+            <li>lorem49</li>
+            <li>lorem50</li>
+            <li>lorem51</li>
+            <li>lorem52</li>
+            <li>lorem53</li>
+            <li>lorem54</li>
+            <li>lorem55</li>
+            <li>lorem56</li>
+            <li>lorem57</li>
+            <li>lorem58</li>
+            <li>lorem59</li>
+            <li>lorem60</li>
+            <li>lorem61</li>
+            <li>lorem62</li>
+            <li>lorem63</li>
+            <li>lorem64</li>
+            <li>lorem65</li>
+            <li>lorem66</li>
+            <li>lorem67</li>
+            <li>lorem68</li>
+            <li>lorem69</li>
+            <li>lorem70</li>
+            <li>lorem71</li>
+            <li>lorem72</li>
+            <li>lorem73</li>
+            <li>lorem74</li>
+            <li>lorem75</li>
+            <li>lorem76</li>
+            <li>lorem77</li>
+            <li>lorem78</li>
+            <li>lorem79</li>
+            <li>lorem80</li>
+            <li>lorem81</li>
+            <li>lorem82</li>
+            <li>lorem83</li>
+            <li>lorem84</li>
+            <li>lorem85</li>
+            <li>lorem86</li>
+            <li>lorem87</li>
+            <li>lorem88</li>
+            <li>lorem89</li>
+            <li>lorem90</li>
+            <li>lorem91</li>
+            <li>lorem92</li>
+            <li>lorem93</li>
+            <li>lorem94</li>
+            <li>lorem95</li>
+            <li>lorem96</li>
+            <li>lorem97</li>
+            <li>lorem98</li>
+            <li>lorem99</li>
+            <li>lorem100</li>
+        </ul>
+    </div>
+ 
+</body>
+<script src="./../../bscroll.js"></script>
+<script>
+    let BS=new BScroll(".content",{
+        probeType:3,
+        pullUpLoad:true,
+    });
+    BS.on("scroll",da=>{
+        // console.log(da);
+        
+    });
+    BS.on("pullingUp",da=>{
+        console.log("continue");
+        setTimeout(()=>{
+            BS.finishPullUp(); 
+        },2000)
+        
+    });
+    
+</script>
+</html>
