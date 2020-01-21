@@ -5,7 +5,6 @@ export function request(confi) {
         timeout: 2000
     });
     instance.interceptors.response.use(config=>{
-        console.log(config);
         return config.data;
     },err=>{
         console.log("sd");

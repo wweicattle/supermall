@@ -24,6 +24,17 @@ export default {
       default: false
     }
   },
+  methods: {
+    refresh() {
+      this.BS && this.BS.refresh && this.BS.refresh();
+    },
+    finishPullup() {
+      this.BS && this.BS.finishPullup && this.BS.finishPullUp();
+    }
+    // getSCrollHeight(){
+    //   return this.BS?this.BS.y:0;
+    // }
+  },
 
   mounted() {
     this.BS = new BScroll(".wrapper", {
@@ -33,27 +44,12 @@ export default {
     });
     this.BS.on("scroll", da => {
       this.$emit("scrollbtn", da);
-      
-
     });
     this.BS.on("pullingUp", () => {
       this.$emit("pullLoad");
-      // setTimeout(() => {
-      //   this.BS.finishPullUp();
-      // }, 2000);
     });
   }
 };
 </script>
 <style  scoped>
-.wrapper {
-  /* position: absolute;
-  top: 44px;
-  left: 0;
-  right: 0; 
-  bottom: 49px; */
-
-  height: calc(100% - 93px);
-  overflow: hidden;
-}
 </style>

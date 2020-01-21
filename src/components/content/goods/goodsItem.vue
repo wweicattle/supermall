@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" alt />
+    <img :src="showimg" @load="imgload" @click="goodsbtn(goodsItem.iid)"/>
     <div class="item-context">
       <p class="overflow">{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -21,6 +21,21 @@ export default {
         return {};
       }
     }
+  },
+  computed:{
+    showimg(){
+      return this.goodsItem.image||this.goodsItem.show.img;
+    }
+  },
+  methods: {
+    imgload() {
+      this.$bus.$emit("loadimg");
+    },
+    goodsbtn(value){
+      this.$router.push("/detail/"+value);
+
+
+    }
   }
 };
 </script>
@@ -37,7 +52,7 @@ export default {
   width: 100%;
   height: 225px;
 }
-.item-context{
+.item-context {
   padding: 10px 0;
 }
 .item-context p {
@@ -45,7 +60,6 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   padding-bottom: 3px;
-
 }
 .item-context .price {
   color: var(--color-high-text);

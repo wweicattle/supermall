@@ -2,15 +2,29 @@
   <div id="home">
     <nav-bar class="bgColor">
       <div slot="left"></div>
-      <div slot="center">购物街</div>
+      <div slot="center" style="color:#fff">购物街</div>
       <div slot="right"></div>
     </nav-bar>
+    <tab-control
+      :title="title"
+      class="control"
+      @tabclick="tabclick"
+      v-show="isshow"
+      ref="tabcontrol1"
+    ></tab-control>
 
-    <scroll-home ref="back" :probeType="3" @scrollbtn="scrollbtn" :pullLoad="true" @pullLoad="pullLoad">
-      <home-swiper :banners="banners" />
+    <scroll-home
+      ref="scroll"
+      :probeType="3"
+      @scrollbtn="scrollbtn"
+      :pullLoad="true"
+      @pullLoad="pullLoad"
+      class="home-scroll"
+    >
+      <home-swiper :banners="banners" @SwiperImgfinish="Imgloadfinish" />
       <home-view :recommends="recommends" />
       <home-feature></home-feature>
-      <tab-control :title="title" class="tab-control" @tabclick="tabclick"></tab-control>
+      <tab-control :title="title" @tabclick="tabclick" ref="tabcontrol"></tab-control>
       <good-list :goods="showgoods"></good-list>
     </scroll-home>
     <BackHome @click.native="backHome" v-show="backValue"></BackHome>
@@ -31,9 +45,14 @@ import TabControl from "components/content/tabControl/TabControl";
 import goodList from "components/content/goods/goodsList";
 import scrollHome from "components/common/scroll/scrollHome";
 import BackHome from "components/content/backTop/BackHome";
-// import backHome from "components/content/backTop/BackHome";
+
+// 导入公共组件
+import { debounce } from "common/utils";
+
+import { itemMixin } from "common/mixin";
 export default {
   name: "Home",
+
   components: {
     HomeSwiper,
     HomeView,
@@ -44,6 +63,7 @@ export default {
     scrollHome,
     BackHome
   },
+  mixins: [itemMixin],
   data() {
     return {
       banners: null,
@@ -55,25 +75,30 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentValue: "pop",
-      backValue: false
+      backValue: false,
+      swiperHeight: 0,
+      isshow: false,
+      scrollY: 0,
+      imgrefresh: null
     };
   },
   methods: {
+    // 轮播图片已经加载成功
+    Imgloadfinish() {
+      this.swiperHeight = this.$refs.tabcontrol.$el.offsetTop;
+      console.log(this.swiperHeight);
+    },
     // 上拉下载更多
     pullLoad() {
       this.achiveHomeData1(this.currentValue);
-      this.$refs.back.BS.finishPullUp();
-      this.$refs.back.BS.refresh();
-
     },
-
     // 获取scroll的偏移量，X-Y
-    scrollbtn(da) {
-      this.backValue = !(da.y > -700);
+    scrollbtn(position) {
+      this.demo(position);
     },
     // 点击返回最上层
     backHome() {
-      this.$refs.back.BS.scrollTo(0, 0, 500);
+      this.$refs.scroll.BS.scrollTo(0, 0, 500);
     },
     achiveHomeData() {
       // 获取轮播图的数据
@@ -89,12 +114,15 @@ export default {
       return achiveTab(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+        this.$refs.scroll.finishPullup();
       });
     },
     tabclick(index) {
       let title = ["pop", "new", "sell"];
       let num = title[index];
       this.currentValue = num;
+      this.$refs.tabcontrol1.currentIndex = index;
+      this.$refs.tabcontrol.currentIndex = index;
     }
   },
   computed: {
@@ -107,6 +135,17 @@ export default {
     this.achiveHomeData1("new");
     this.achiveHomeData1("sell");
     this.achiveHomeData1("pop");
+  },
+  mounted() {},
+  activated() {
+    this.$refs.scroll.BS.scrollTo(0, this.scrollY);
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    // 进行离开则记录其浏览时的商品的offsetTop
+    // this.scrollY=this.$refs.back.getSCrollHeight();
+    // console.log(this.scrollY);
+    this.$bus.$off("loadimg", this.imgrefresh);
   }
 };
 </script>
@@ -114,15 +153,25 @@ export default {
 #home {
   height: 100vh;
 }
+.home-scroll {
+  /* position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0; 
+  bottom: 49px; */
+  height: calc(100% - 93px);
+  overflow: hidden;
+}
 .bgColor {
   background-color: var(--color-tint);
-  position: sticky;
+  /* position: sticky;
   top: 0px;
   z-index: 9;
-  left: 0;
+  left: 0; */
 }
-.tab-control {
-  position: sticky;
+.control {
+  width: 100%;
+  position: fixed;
   top: 44px;
   background: #fff;
   z-index: 2;

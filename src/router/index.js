@@ -4,6 +4,8 @@ const home = () => import("views/home/Home");
 const cart = () => import("views/cart/Cart");
 const profile = () => import("views/profile/Profile");
 const sort = () => import("views/sort/Sort");
+const Detail = () => import("views/detail/Detail");
+
 
 // 安装插件
 Vue.use(vuerouter);
@@ -33,6 +35,12 @@ const routes = [
         path: "/profile",
         component: profile,
     },
+    {
+        path:"/detail/:id",
+        component:Detail,
+       
+
+    }
 ];
 
 const router = new vuerouter({

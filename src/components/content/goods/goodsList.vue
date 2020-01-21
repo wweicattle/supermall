@@ -1,16 +1,18 @@
 <template>
   <div class="goods">
-      <goods-item v-for="(item,index) in goods" :key="index" :goodsItem="item" >
-
-      </goods-item>
+    <goods-item v-for="(item,index) in goods" :key="index" :goodsItem="item"></goods-item>
   </div>
 </template>
 <script>
-import goodsItem from "./goodsItem"
+import goodsItem from "./goodsItem";
 export default {
   name: "goodlist",
-  components:{
-      goodsItem,
+  components: {
+    goodsItem
+  },
+
+  methods: {
+    
   },
   props: {
     goods: {
@@ -20,15 +22,16 @@ export default {
       }
     }
   },
-  mouted(){
-      console.log(this.goods);
-  }
-};
+  mounted() {
+  },
+  
+
+}
 </script>
 <style  scoped>
-.goods{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:space-evenly;
+.goods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 </style>
